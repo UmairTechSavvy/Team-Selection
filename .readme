@@ -1,0 +1,120 @@
+form submission m button m hamesha type="submit" hoga aur form m onSubmit hoga
+
+
+=> Difference between Find and Filter
+
+find mai hum array k first element ko access kar sakte hain . humrae pas jab condition given hogi to jo element condition satisfy karrha hoga wo aiga agr aik s ziadah karrhe hun gai to first one will come as an answer 
+but in filter all the elements which satify the condition will come as outout in the form of an array
+
+=> Difference between onClick and the onChange 
+
+when we press something then we will use onClick so precisely in button feature we will use onClick and when an input is change then we will use onChange so precisely in input as <input type="text" onchange=>
+
+
+import { useState } from "react";
+
+
+
+const GroupedTeamMembers = ({employees,setTeam,selectedTeam}) => {
+
+const [groupedMember , setGroupedMembers] = useState(GroupedTeamMembers())
+
+const Allocation = ()=>{
+  var teams = []
+
+  let teamMembers = employees.filter((employee)=> employee.TeamName === 'TeamA')
+
+  let MembersA = {Team:'Team A' , memebers: teamMembers , collapsed:selectedTeam === 'Team A' ? false:true }
+  teams.push(MembersA)
+
+  let teamMembersB = employees.filter((employee)=> employee.TeamName === 'TeamB')
+
+  let MembersB = {Team:'Team B' , memebers: teamMembersB , collapsed:selectedTeam === 'Team B' ? false:true }
+  teams.push(MembersB)
+
+  let teamMembersC = employees.filter((employee)=> employee.TeamName === 'TeamC')
+
+  let MembersC = {Team:'Team C' , memebers: teamMembers , collapsed:selectedTeam === 'Team C' ? false:true }
+  teams.push(MembersC)
+
+  return teams
+}
+
+
+function teamClicked(event){
+  let newGroupData = groupedMember.map((groupedData) => groupedData.Team === event.currentTarget.id
+                                                     ?{...groupedData,collapsed:!groupedData.collapsed}
+                                                     :groupedData);
+         
+       setGroupedMembers(teamClicked)  
+       setTeam(event.currentTarget.id)                                            
+}
+
+
+
+
+  return (
+    <main className="container">
+   
+    {
+
+     groupedMember.map((item) =>{
+
+return(
+
+  <div  key={item.Team} className="card mt-2" style={{cursor:"pointer"}} >
+
+    <h4 id={item.Team} className="card-header text-secondary bg-white" onClick={teamClicked}>
+
+Team name : {item.Team}
+
+    </h4>
+
+    <div id={"collapse_" + item.Team} className={item.collapsed === true ? "collapse" : }>
+
+      <hr/>
+
+      {
+
+        item.groupedMember.map((member)=> {
+return (
+
+  <div className="mt-2">
+
+    <h5 className="card-title mt-2">
+
+      <span className="text-dark">Full name : {member.name}</span>
+
+    </h5>
+
+    <p>Designation : {member.designation}</p>
+  </div>
+
+);
+
+        })
+      }
+
+
+    </div>
+
+
+  </div>
+
+ 
+
+
+
+
+)
+
+  }  )
+  
+
+    }
+
+    </main>
+  );
+};
+
+export default GroupedTeamMembers;
